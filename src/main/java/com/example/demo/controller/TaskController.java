@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
-@RestController("/task")
+@RestController
+@RequestMapping(path = "/task")
 public class TaskController {
 
     @Autowired
@@ -22,8 +23,9 @@ public class TaskController {
     }
 
 
-    @GetMapping(value = "/{guid}")
-    public Task getTask(@PathVariable("guid") UUID id) throws ChangeSetPersister.NotFoundException {
+    @GetMapping(value = "/{id}")
+    public Task getTask(@PathVariable("id") UUID id) throws ChangeSetPersister.NotFoundException {
+
         return taskService.getTask(id);
     }
 }
