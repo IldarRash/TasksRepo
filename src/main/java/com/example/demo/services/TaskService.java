@@ -1,5 +1,6 @@
 package com.example.demo.services;
 
+import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.model.Task;
 import com.example.demo.repo.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,6 @@ import java.util.UUID;
 public class TaskService {
 
     private final static String STATUS_CREATED = "created";
-    private final static String STATUS_RUNNIG = "running";
-    private final static String STATUS_COMPLETED = "completed";
 
     @Autowired
     private TaskRepo taskRepo;
@@ -27,8 +26,8 @@ public class TaskService {
         return task.getId();
     }
 
-    public Task getTask(UUID id) throws ChangeSetPersister.NotFoundException {
+    public Task getTask(UUID id) throws NotFoundException {
         return taskRepo.findById(id)
-                .orElseThrow(ChangeSetPersister.NotFoundException::new);
+                .orElseThrow(NotFoundException::new);
     }
 }
