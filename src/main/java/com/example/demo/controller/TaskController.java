@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.exceptions.GuidException;
+import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.model.Task;
 import com.example.demo.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,17 @@ public class TaskController {
 
 
     @GetMapping(value = "/{id}")
-    public Task getTask(@PathVariable("id") UUID id) throws ChangeSetPersister.NotFoundException {
+    public Task getTask(@PathVariable("id") String id) throws NotFoundException {
+        UUID uuid = validate(id);
+        return taskService.getTask(uuid);
+    }
 
-        return taskService.getTask(id);
+    private UUID validate(String id) {
+        try {
+            UUID uuid = UUID.fromString(id);
+            return uuid;
+        } catch (IllegalArgumentException ex) {
+            throw new GuidException("Это не GUID");
+        }
     }
 }

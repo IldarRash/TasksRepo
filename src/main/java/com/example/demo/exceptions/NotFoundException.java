@@ -15,6 +15,6 @@ public class NotFoundException extends RuntimeException {
     }
 
     public NotFoundException() {
-
+        super("объект не найден");
     }
 }

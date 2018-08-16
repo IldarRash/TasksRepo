@@ -11,7 +11,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler
     @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiError handleNotFoundException(NotFoundException ex) {
         return new ApiError(404, ex.getMessage());
     }

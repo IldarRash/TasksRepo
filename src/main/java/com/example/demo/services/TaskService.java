@@ -38,11 +38,13 @@ public class TaskService {
     @Scheduled(fixedDelay = 1000)
     private void updateTasks() {
         List<Task> tasks = taskRepo.findAllByStatus(STATUS_RUNNIG);
-        for (Task task : tasks) {
-            if(System.currentTimeMillis() - task.getTimestamp() >= TWO_MIN) {
-                task.setStatus(STATUS_DONE);
-                task.setTimestamp(System.currentTimeMillis());
-                taskRepo.save(task);
+        if(tasks.size() != 0) {
+            for (Task task : tasks) {
+                if(System.currentTimeMillis() - task.getTimestamp() >= TWO_MIN) {
+                    task.setStatus(STATUS_DONE);
+                    task.setTimestamp(System.currentTimeMillis());
+                    taskRepo.save(task);
+                }
             }
         }
     }
